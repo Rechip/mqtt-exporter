@@ -36,6 +36,7 @@ public:
 			_output += metric->stringify();
 			_output += "\n";
 		}
+		_output += "# EOF\n";
 
 		mg_write(conn, _output.data(), _output.size());
 
