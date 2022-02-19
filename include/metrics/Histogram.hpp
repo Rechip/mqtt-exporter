@@ -14,7 +14,7 @@ public:
 	struct Point : public IPoint {
 		Point(Histogram* histogram, double le) : IPoint(histogram), _le(le) {
 			_labelSet = _metric->labelSet();
-			_labelSet.insert({"le", std::to_string(_le)});
+			_labelSet.insert({"le", _le == std::numeric_limits<double>::infinity() ? "+Inf" : std::to_string(_le)});
 		}
 
 		virtual ~Point() = default;
