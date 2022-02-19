@@ -1,0 +1,11 @@
+[requires]
+mosquitto/2.0.14
+simple-yaml/0.2.2
+logger/0.1.0@rechip/experimental
+magic_enum/0.7.3
+civetweb/1.15
+openssl/1.1.1m
+nlohmann_json/3.10.4
+
+[generators]
+cmake

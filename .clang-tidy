@@ -1,0 +1,5 @@
+---
+Checks:              'clang-diagnostic-*,clang-analyzer-*,bugprone-*,modernize-*,performance-*,readability-*,cert-*,misc-*,cppcoreguidelines-*,-modernize-use-trailing-return-type,-readability-named-parameter'
+WarningsAsErrors:    ''
+HeaderFilterRegex:   '.*mosquitto-exporter.*'
+FormatStyle:         none

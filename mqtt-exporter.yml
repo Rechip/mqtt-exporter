@@ -1,0 +1,190 @@
+server:
+  address: eu1.broker.rechip.eu
+  port: 11010
+  clientId: myClientik2
+  tls: true
+local:
+  bind: "0.0.0.0:8388"
+metrics:
+
+  - topic: "FVE_Telc/+/Total"
+    openMetric:
+      name: "responses"
+      help: "Number of responses"
+      type: "Counter"
+      labels:
+        - key: "plant"
+          value: "${plant}"
+        - key: "converter"
+          value: "${deviceId}"
+    variables:
+      - name: "deviceId"
+        target: "topic"
+        regex: "/([0-9]+)/"
+      - name: "plant"
+        target: "topic"
+        regex: "^([^/]+)/"
+
+  - topic: "FVE_Telc/+/Total"
+    openMetric:
+      name: "total_power"
+      unit: "kilowatthour"
+      help: "Total energy produced"
+      type: "Gauge"
+      labels:
+        - key: "plant"
+          value: "${plant}"
+        - key: "converter"
+          value: "${deviceId}"
+    variables:
+      - name: "deviceId"
+        target: "topic"
+        regex: "/([0-9]+)/"
+      - name: "plant"
+        target: "topic"
+        regex: "^([^/]+)/"
+
+# Power AC
+  - topic: "FVE_Telc/+/Pac/+"
+    openMetric:
+      name: "power_ac_watt"
+      help: "Live power AC"
+      type: "Gauge"
+      labels:
+        - key: "plant"
+          value: "${plant}"
+        - key: "converter"
+          value: "${deviceId}"
+        - key: "phase"
+          value: "${phase}"
+    variables:
+      - name: "deviceId"
+        target: "topic"
+        regex: "/([0-9]+)/"
+      - name: "plant"
+        target: "topic"
+        regex: "^([^/]+)/"
+      - name: "phase"
+        target: "topic"
+        regex: "([0-9]+)$"
+
+# Current AC
+  - topic: "FVE_Telc/+/Iac/+"
+    openMetric:
+      name: "current_ac_amper"
+      help: "Live current AC"
+      type: "Gauge"
+      labels:
+        - key: "plant"
+          value: "${plant}"
+        - key: "converter"
+          value: "${deviceId}"
+        - key: "phase"
+          value: "${phase}"
+    variables:
+      - name: "deviceId"
+        target: "topic"
+        regex: "/([0-9]+)/"
+      - name: "plant"
+        target: "topic"
+        regex: "^([^/]+)/"
+      - name: "phase"
+        target: "topic"
+        regex: "([0-9]+)$"
+
+# Voltage AC
+  - topic: "FVE_Telc/+/Uac/+"
+    openMetric:
+      name: "voltage_ac_volt"
+      help: "Live voltage AC"
+      type: "Gauge"
+      labels:
+        - key: "plant"
+          value: "${plant}"
+        - key: "converter"
+          value: "${deviceId}"
+        - key: "phase"
+          value: "${phase}"
+    variables:
+      - name: "deviceId"
+        target: "topic"
+        regex: "/([0-9]+)/"
+      - name: "plant"
+        target: "topic"
+        regex: "^([^/]+)/"
+      - name: "phase"
+        target: "topic"
+        regex: "([0-9]+)$"
+
+
+# Power Photovoltaic
+  - topic: "FVE_Telc/+/Ppv/+"
+    openMetric:
+      name: "power_pv_watt"
+      help: "Live power Photovoltaic"
+      type: "Gauge"
+      labels:
+        - key: "plant"
+          value: "${plant}"
+        - key: "converter"
+          value: "${deviceId}"
+        - key: "branch"
+          value: "${branch}"
+    variables:
+      - name: "deviceId"
+        target: "topic"
+        regex: "/([0-9]+)/"
+      - name: "plant"
+        target: "topic"
+        regex: "^([^/]+)/"
+      - name: "branch"
+        target: "topic"
+        regex: "([0-9]+)$"
+
+# Current Photovoltaic
+  - topic: "FVE_Telc/+/Ipv/+"
+    openMetric:
+      name: "current_pv_amper"
+      help: "Live current Photovoltaic"
+      type: "Gauge"
+      labels:
+        - key: "plant"
+          value: "${plant}"
+        - key: "converter"
+          value: "${deviceId}"
+        - key: "branch"
+          value: "${branch}"
+    variables:
+      - name: "deviceId"
+        target: "topic"
+        regex: "/([0-9]+)/"
+      - name: "plant"
+        target: "topic"
+        regex: "^([^/]+)/"
+      - name: "branch"
+        target: "topic"
+        regex: "([0-9]+)$"
+
+# Voltage Photovoltaic
+  - topic: "FVE_Telc/+/Upv/+"
+    openMetric:
+      name: "voltage_pv_volt"
+      help: "Live voltage Photovoltaic"
+      type: "Gauge"
+      labels:
+        - key: "plant"
+          value: "${plant}"
+        - key: "converter"
+          value: "${deviceId}"
+        - key: "branch"
+          value: "${branch}"
+    variables:
+      - name: "deviceId"
+        target: "topic"
+        regex: "/([0-9]+)/"
+      - name: "plant"
+        target: "topic"
+        regex: "^([^/]+)/"
+      - name: "branch"
+        target: "topic"
+        regex: "([0-9]+)$"
