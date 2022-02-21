@@ -15,11 +15,11 @@ IMetricFamily::IMetricFamily(Configuration config) : _config(std::move(config)) 
 
 std::shared_ptr<IMetricFamily> IMetricFamily::create(IMetricFamily::Configuration config) {
 	switch (config.openMetric.type) {
-	case OpenMetric::Type::Counter:
+	case OpenMetric::Type::counter:
 		return std::make_shared<MetricFamily<Counter>>(config);
-	case OpenMetric::Type::Gauge:
+	case OpenMetric::Type::gauge:
 		return std::make_shared<MetricFamily<Gauge>>(config);
-	case OpenMetric::Type::Histogram:
+	case OpenMetric::Type::histogram:
 		return std::make_shared<MetricFamily<Histogram>>(config);
 	case OpenMetric::Type::MatchGauge:
 		return std::make_shared<MetricFamily<MatchGauge>>(config);

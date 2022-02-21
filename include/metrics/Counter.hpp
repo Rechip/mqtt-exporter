@@ -24,7 +24,7 @@ public:
 		double _value{};
 	};
 
-	static constexpr OpenMetric::Type standardType = OpenMetric::Type::Counter;
+	static constexpr OpenMetric::Type standardType = OpenMetric::Type::counter;
 
 	void     newSample(std::string_view payload) override;
 	iterator begin() const override;

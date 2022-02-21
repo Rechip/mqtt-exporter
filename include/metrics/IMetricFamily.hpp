@@ -18,10 +18,10 @@ struct OpenMetric : public simple_yaml::Simple {
 
 	enum class Type {
 		//Standard types
-		Counter,
-		Gauge,
-		Histogram,
-		Summary,
+		counter,
+		gauge,
+		histogram,
+		summary,
 		// Extension types
 		MatchGauge
 	};

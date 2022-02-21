@@ -36,7 +36,7 @@ public:
 		LabelSet _labelSet;
 	};
 
-	static constexpr OpenMetric::Type standardType = OpenMetric::Type::Histogram;
+	static constexpr OpenMetric::Type standardType = OpenMetric::Type::histogram;
 
 	void                newSample(std::string_view payload) override;
 	Histogram::iterator begin() const override;
