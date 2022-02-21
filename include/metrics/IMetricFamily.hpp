@@ -32,6 +32,9 @@ struct OpenMetric : public simple_yaml::Simple {
 	std::string        unit   = bound("unit", "");
 	std::vector<Label> labels = bound("labels");
 
+	std::string payloadJsonPath = bound("payloadJsonPath", "");
+	std::string payloadRegex    = bound("payloadRegex", "");
+
 	// Histogram specific
 	std::vector<double> buckets = bound("buckets", std::vector<double>{});
 
@@ -72,6 +75,8 @@ public:
 
 	LabelSet getConstantLabels() const;
 	LabelSet getVariableLabels() const;
+
+	std::string parsePayload(std::string payload) const;
 
 	virtual iterator         begin() const                                               = 0;
 	virtual iterator         end() const                                                 = 0;

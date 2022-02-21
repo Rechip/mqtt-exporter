@@ -3,11 +3,11 @@
 #include "metrics/Counter.hpp"
 #include "metrics/Gauge.hpp"
 #include "metrics/Histogram.hpp"
-#include "metrics/MatchGauge.hpp"
-
 #include "metrics/IMetric.hpp"
-
+#include "metrics/MatchGauge.hpp"
 #include "metrics/MetricFamily.hpp"
+
+#include <nlohmann/json.hpp>
 #include <ranges>
 
 IMetricFamily::IMetricFamily(Configuration config) : _config(std::move(config)) {
@@ -87,4 +87,22 @@ std::string IMetricFamily::getUnit() const {
 
 std::string IMetricFamily::getFullname() const {
 	return getUnit().empty() ? getBaseName() : getBaseName() + "_" + getUnit();
+}
+#include <iostream>
+std::string IMetricFamily::parsePayload(std::string payload) const {
+	if (!_config.openMetric.payloadJsonPath.empty()) {
+		nlohmann::json::json_pointer pointer{_config.openMetric.payloadJsonPath};
+		nlohmann::json               json(nlohmann::json::parse(payload));
+		payload = json.at(pointer).dump();
+	}
+
+	if (!_config.openMetric.payloadRegex.empty()) {
+		std::regex  regex{_config.openMetric.payloadRegex};
+		std::smatch match;
+		if (std::regex_match(payload, match, regex)) {
+			payload = match[1];
+		}
+	}
+
+	return payload;
 }

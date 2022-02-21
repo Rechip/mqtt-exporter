@@ -113,7 +113,8 @@ void App::messageArrived(std::string topic, std::string payload, std::string omN
 		auto parsed    = parse(metric->getVariables(), topic, payload);
 		variableLabels = replace(variableLabels, parsed);
 		// TODO: parse payload by regex or JSON path
-		metric->newSample(payload, variableLabels);
+		auto parsedPayload = metric->parsePayload(payload);
+		metric->newSample(parsedPayload, variableLabels);
 	}
 }
 
