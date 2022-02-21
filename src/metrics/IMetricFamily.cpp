@@ -88,7 +88,7 @@ std::string IMetricFamily::getUnit() const {
 std::string IMetricFamily::getFullname() const {
 	return getUnit().empty() ? getBaseName() : getBaseName() + "_" + getUnit();
 }
-#include <iostream>
+
 std::string IMetricFamily::parsePayload(std::string payload) const {
 	if (!_config.openMetric.payloadJsonPath.empty()) {
 		nlohmann::json::json_pointer pointer{_config.openMetric.payloadJsonPath};
