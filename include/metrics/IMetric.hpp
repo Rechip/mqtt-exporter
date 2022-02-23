@@ -25,7 +25,9 @@ public:
 		}
 
 		std::string stringify() const {
-			return getFullname() + to_string(labelSet()) + " " + std::to_string(value());
+			std::stringstream ss;
+			ss << getFullname() << to_string(labelSet()) << " " << value();
+			return ss.str();
 		}
 
 	protected:
