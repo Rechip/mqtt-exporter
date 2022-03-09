@@ -106,3 +106,6 @@ std::string IMetricFamily::parsePayload(std::string payload) const {
 
 	return payload;
 }
+
+void IMetricFamily::routine() {
+}

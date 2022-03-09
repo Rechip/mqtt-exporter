@@ -83,9 +83,27 @@ App::App(std::shared_ptr<rechip::logger::Logger> logger, Configuration config)
 	auto handler = std::make_shared<MetricsHandler>(_metrics);
 	_server->addHandler("/metrics", handler.get());
 	_serverHandlers.emplace_back(handler);
+
+	_routineThread = std::jthread([this](std::stop_token token) {
+		while (!token.stop_requested()) {
+			{
+				std::scoped_lock lock{*_metrics};
+				for (auto& [name, metric] : *_metrics) {
+					metric->routine();
+				}
+			}
+
+			std::this_thread::sleep_for(1s);
+		}
+	});
 }
 
 App::~App() {
+	_routineThread.request_stop();
+	if (_routineThread.joinable()) {
+		_routineThread.join();
+	}
+
 	auto ticket = _client->disconnect();
 	_server->close();
 	ticket->wait_for(1s);

@@ -49,15 +49,17 @@ struct OpenMetric : public simple_yaml::Simple {
 
 class IMetricFamily {
 public:
+	using iterator = VectorIterator<std::shared_ptr<IMetric>>;
+	using Clock    = IMetric::Clock;
+
 	struct Configuration : public simple_yaml::Simple {
 		using Simple::Simple;
 
 		std::string           topic      = bound("topic");
 		OpenMetric            openMetric = bound("openMetric");
 		std::vector<Variable> variables  = bound("variables");
+		Clock::duration       maxAge     = bound("maxAge", std::chrono::duration_cast<Clock::duration>(std::chrono::days{1}));
 	};
-
-	using iterator = VectorIterator<std::shared_ptr<IMetric>>;
 
 	IMetricFamily(Configuration config);
 	virtual ~IMetricFamily() = default;
@@ -82,6 +84,7 @@ public:
 	virtual iterator         end() const                                                 = 0;
 	virtual void             newSample(std::string_view payload, const LabelSet& labels) = 0;
 	virtual OpenMetric::Type getStandardType() const                                     = 0;
+	virtual void             routine();
 
 	Configuration _config;
 };

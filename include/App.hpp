@@ -52,6 +52,8 @@ private:
 	SharedMetrics                              _metrics;
 	std::unique_ptr<CivetServer>               _server;
 	std::vector<std::shared_ptr<CivetHandler>> _serverHandlers;
+
+	std::jthread _routineThread;
 };
 
 #endif

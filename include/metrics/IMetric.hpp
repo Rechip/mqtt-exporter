@@ -4,6 +4,7 @@
 
 #include "Label.hpp"
 #include "VectorIterator.hpp"
+#include <chrono>
 
 class IMetricFamily;
 
@@ -11,6 +12,8 @@ class IMetric {
 public:
 	class IPoint {
 	public:
+		using Clock = std::chrono::system_clock;
+
 		IPoint(IMetric* metric) : _metric(metric) {
 		}
 		virtual ~IPoint() = default;
@@ -38,6 +41,7 @@ public:
 	virtual ~IMetric() = default;
 
 	using iterator = VectorIterator<std::shared_ptr<IPoint>>;
+	using Clock    = IPoint::Clock;
 
 	virtual iterator begin() const                       = 0;
 	virtual iterator end() const                         = 0;
